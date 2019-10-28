@@ -37,4 +37,23 @@ public class Encrypter {
         return encryptionKey;
     }
 
+    public void randomCharSet(int seed) {
+        Random generator = new Random(seed);
+        for (int i = 1; i < generator.nextInt(1000); i++) {
+            for (int j = 0; j < charSet.length(); j++) {
+                generator = new Random(seed + (i * (j + 1)));
+                int randNum = generator.nextInt(charSet.length() - 1);
+                charSet = swapIndex(charSet, j, randNum);
+            }
+        }
+        System.out.println(charSet);
+    }
+
+    private String swapIndex(String str, int i1, int i2) {
+        StringBuilder sb = new StringBuilder(str);
+        sb.setCharAt(i1, str.charAt(i2));
+        sb.setCharAt(i2, str.charAt(i1));
+        return sb.toString();
+    }
+
 }
