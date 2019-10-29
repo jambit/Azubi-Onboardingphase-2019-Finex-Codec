@@ -1,5 +1,7 @@
 package com.jambit;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -16,6 +18,8 @@ public class UserInterface {
     Charset utf8 = StandardCharsets.UTF_8;
     private String message;
     private String encryptionKey;
+    JFileChooser fileChooser = new JFileChooser();
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
 
     public String getMessage() {
         return message;
@@ -50,7 +54,7 @@ public class UserInterface {
             switch (menuChoice) {
                 case 1:
                     String enterMessage;
-                    System.out.println("Enter your message:");
+                    System.out.println("Enter your message:\n");
                     input.nextLine();
                     enterMessage = input.nextLine();
                     setMessage(enterMessage);
@@ -61,10 +65,11 @@ public class UserInterface {
                     setEncryptionKey(keyMessage);
                     break;
                 case 2:
-                    System.out.println("Enter your file Path: ");
+                    //System.out.println("Enter your file Path: ");
                     String path;
-                    input.nextLine();
-                    path = input.next();
+                    //input.nextLine();
+                    //path = input.next();
+                    path = openFileChooser();
                     path = path.replaceAll("[\\u202A]", "");
                     System.out.println(path);
                     try {
@@ -105,6 +110,13 @@ public class UserInterface {
 
     }
 
+    String openFileChooser() {
+        fileChooser.setFileFilter(filter);
+        fileChooser.showOpenDialog(null);
+        return fileChooser.getSelectedFile().getAbsolutePath();
+
+    }
+
     public String readFileAsString(String fileName) throws IOException {
         String data = "";
         data = new String(Files.readAllBytes(Paths.get(fileName)));
@@ -114,7 +126,7 @@ public class UserInterface {
     public void writeToFile(String encryptedMessage) throws IOException {
         try {
             if (file.createNewFile()) {
-                System.out.println("File Created");
+                System.out.println("\nFile Created\n");
             } else {
                 System.err.println("File already exists!\n");
                 System.out.println("Do you want to override it? \n[Y]/[N]");
@@ -143,5 +155,6 @@ public class UserInterface {
 
 
     }
+
 
 }
