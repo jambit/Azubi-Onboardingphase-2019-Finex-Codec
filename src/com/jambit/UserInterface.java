@@ -1,6 +1,7 @@
 package com.jambit;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ public class UserInterface {
         encryptionKey = encryptionKeyToSet;
     }
 
-    void menu() throws Exception {
+    void startMenu() throws Exception {
         System.out.println("  ______                             _            \n" +
                 " |  ____|                           | |           \n" +
                 " | |__   _ __   ___ _ __ _   _ _ __ | |_ ___ _ __ \n" +
@@ -43,28 +44,37 @@ public class UserInterface {
                 input.nextLine();
                 enterMessage = input.nextLine();
                 setMessage(enterMessage);
-                System.out.println("Enter your Encryption Key or set 0 to randomize it: ");
+                System.out.println("Enter your Encryption Key or enter 0 to randomize it: ");
                 System.out.println("Use this format: [xxx:xxx]");
-                String key;
-                key = input.nextLine();
-                setEncryptionKey(key);
+                String keyMessage;
+                keyMessage = input.nextLine();
+                setEncryptionKey(keyMessage);
                 break;
             case 2:
                 System.out.println("Enter your file Path: ");
                 String path;
+                input.nextLine();
                 path = input.next();
+                path = path.replaceAll("[\\u202A]", "");
+                System.out.println(path);
                 setMessage(readFileAsString(path));
+                System.out.println("Enter your Encryption Key or enter 0 to randomize it: ");
+                System.out.println("Use this format: [xxx:xxx]");
+                String keyFile;
+                keyFile = input.next();
+                setEncryptionKey(keyFile);
                 break;
             default:
                 System.out.println("Invalid Input");
                 Thread.sleep(500);
-                menu();
+                startMenu();
         }
 
     }
-    public static String readFileAsString(String fileName)throws Exception
+    public String readFileAsString(String fileName)throws Exception
     {
         String data = "";
+
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
     }
