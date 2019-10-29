@@ -57,6 +57,10 @@ public class Encrypter {
         return encryptedMessage.toString();
     }
 
+    /**
+     * Randomizes the character set
+     * @param seed seed to use for the randomization
+     */
     public void randomCharSet(int seed) {
         Random generator = new Random(seed);
         for (int i = 1; i < generator.nextInt(1000); i++) {
@@ -69,6 +73,13 @@ public class Encrypter {
         System.out.println(charSet);
     }
 
+    /**
+     * Swap 2 indexes in a string
+     * @param str string to swap string
+     * @param i1 index1
+     * @param i2 index2
+     * @return string after swap
+     */
     private String swapIndex(String str, int i1, int i2) {
         StringBuilder sb = new StringBuilder(str);
         sb.setCharAt(i1, str.charAt(i2));
