@@ -21,8 +21,8 @@ public class Encrypter {
      * @return returns a encrypted String
      */
     public String encrypt(String msg) {
-        encryptionKey = ((Math.random() * charSet.length() - 1) + 1) + "";
-        return encryptionCaesarCipher(msg, Integer.parseInt(encryptionKey));
+        encryptionKey = generateKey();
+        return encrypt(msg, encryptionKey);
     }
 
     /**
