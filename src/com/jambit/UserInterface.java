@@ -43,18 +43,17 @@ public class UserInterface {
                 input.nextLine();
                 enterMessage = input.nextLine();
                 setMessage(enterMessage);
-                System.out.println("Enter your Encryption Key: ");
-                String enterKey;
-                enterKey = input.nextLine();
-                setEncryptionKey(enterKey);
+                System.out.println("Enter your Encryption Key or set 0 to randomize it: ");
+                System.out.println("Use this format: [xxx:xxx]");
+                String key;
+                key = input.nextLine();
+                setEncryptionKey(key);
                 break;
             case 2:
                 System.out.println("Enter your file Path: ");
                 String path;
-                path = input.nextLine();
-                String enterFile;
-                enterFile = readFileAsString(path);
-                setMessage(enterFile);
+                path = input.next();
+                setMessage(readFileAsString(path));
                 break;
             default:
                 System.out.println("Invalid Input");
