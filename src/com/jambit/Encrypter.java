@@ -6,7 +6,7 @@ import java.util.Random;
  * Encrypts messages with a key
  */
 public class Encrypter {
-    private int encryptionKey;
+    private String encryptionKey;
     static String charSet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß0123456789,.!?\"§$%&/()=+-*\\_#~<>| ";
 
@@ -21,8 +21,8 @@ public class Encrypter {
      * @return returns a encrypted String
      */
     public String encrypt(String msg) {
-        encryptionKey = (int) (Math.random() * charSet.length() - 1) + 1;
-        return encryptionCaesarCipher(msg, encryptionKey);
+        encryptionKey = ((Math.random() * charSet.length() - 1) + 1) + "";
+        return encryptionCaesarCipher(msg, Integer.parseInt(encryptionKey));
     }
 
     /**
