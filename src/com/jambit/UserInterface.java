@@ -117,11 +117,10 @@ public class UserInterface {
                 System.out.println("File Created");
             } else {
                 System.err.println("File already exists!\n");
-                System.out.println("Do you want to delete it? \n[Y]/[N]");
+                System.out.println("Do you want to override it? \n[Y]/[N]");
                 String yesNo = input.next();
                 if (yesNo.equals("Y") || yesNo.equals("y")) {
                     if (file.delete()) {
-                        System.out.println("File successfully deleted!");
                         Thread.sleep(1000);
                         writeToFile(encryptedMessage);
                     } else {
