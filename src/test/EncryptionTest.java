@@ -1,11 +1,11 @@
-package unitTesting;
+package test;
 
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.jambit.Encrypter;
-import org.junit.jupiter.api.*;
 
-class EncrypterTest {
+class EncryptionTest {
   Encrypter encrypter = new Encrypter();
 
   @BeforeAll

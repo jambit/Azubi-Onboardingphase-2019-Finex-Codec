@@ -1,12 +1,8 @@
 plugins {
     id 'java'
-	id 'application'
+    id 'application'
     id 'com.github.sherter.google-java-format' version '0.8'
     id 'jacoco'
-}
-
-dependencies {
-    compile 'org.junit.jupiter:junit-jupiter-api:5.5.2'
 }
 
 repositories {
@@ -14,15 +10,27 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
+    runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
+}
+test {
+    useJUnitPlatform()
+}
+
+test.finalizedBy jacocoTestReport
+
 sourceSets {
     main {
         java {
             srcDirs = ['src/']
         }
     }
-}
-test{
-    useJUnitPlatform()
+    test {
+        java {
+            srcDirs = ["src/test"]
+        }
+    }
 }
 
 run{
