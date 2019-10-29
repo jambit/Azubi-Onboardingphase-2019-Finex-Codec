@@ -7,7 +7,6 @@ public class Core {
         ui.startMenu();
         String message = ui.getMessage();
         System.out.println(message);
-        encrypter.randomCharSet(400);
         String encryptedMessage = encrypter.encrypt(message);
         System.out.println("Message: " + encryptedMessage);
         System.out.println("Key: " + encrypter.getEncryptionKey());

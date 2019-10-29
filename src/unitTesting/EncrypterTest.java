@@ -11,6 +11,11 @@ class EncrypterTest {
   @BeforeAll
   public static void initAll() {}
 
+  @BeforeEach
+   void init() {
+    encrypter = new Encrypter();
+  }
+
   @Test
   @DisplayName("Basic Encryption")
   void basicEncryption() {
@@ -32,6 +37,8 @@ class EncrypterTest {
   void randomEncryption() {
     String input = "ABC";
     String out = encrypter.encrypt(input);
-    assertEquals(out, encrypter.encrypt(input, encrypter.getEncryptionKey()));
+    String key = encrypter.getEncryptionKey();
+    encrypter = new Encrypter();
+    assertEquals(out, encrypter.encrypt(input, key));
   }
 }

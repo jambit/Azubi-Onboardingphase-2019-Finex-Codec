@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class Encrypter {
     private String encryptionKey;
-    static String charSet =
+    String charSet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß0123456789,.!?\"§$%&/()=+-*\\_#~<>| ";
 
     public String getEncryptionKey() {
@@ -38,6 +38,7 @@ public class Encrypter {
         if (keys.length == 2) {
             randomCharSet(Integer.parseInt(keys[0]));
             ccKey = Integer.parseInt(keys[1]);
+            System.out.println("Test");
         } else {
             ccKey = Integer.parseInt(keys[0]);
         }
