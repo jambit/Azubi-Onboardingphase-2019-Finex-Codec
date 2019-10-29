@@ -15,7 +15,7 @@ class EncrypterTest {
   @DisplayName("Basic Encryption")
   void basicEncryption() {
     String input = "ABC";
-    assertEquals("FGH", encrypter.encrypt(input, 5));
+    assertEquals("FGH", encrypter.encrypt(input, "5"));
   }
 
   @Test
@@ -23,7 +23,7 @@ class EncrypterTest {
   void frequentBasicEncryption() {
     String input = "ABC";
     for (int i = 0; i < 10; i++) {
-      assertEquals("PQR", encrypter.encrypt(input, 15));
+      assertEquals("PQR", encrypter.encrypt(input, "15"));
     }
   }
 
