@@ -59,6 +59,8 @@ public class Encrypter {
 
             if (loc > charSet.length() - 1) {
                 loc -= charSet.length();
+            }else if (loc < 0) {
+                loc += charSet.length();
             }
 
             encryptedMessage.append(charSet.charAt(loc));
