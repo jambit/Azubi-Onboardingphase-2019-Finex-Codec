@@ -3,15 +3,15 @@ package com.jambit;
 public class Decrypter {
     private String charSet = Encrypter.charSet;
 
-    public String decrypt(String msg, int encryptionKey) {
-        return decryptionCaesarCipher(msg, encryptionKey);
+    public String decrypt(String msg, int decryptionKey) {
+        return decryptionCaesarCipher(msg, decryptionKey);
     }
 
     /**
-     * encrypts the message with Caesar cipher
-     * @param msg String to encrypt
-     * @param key key to use for the encrypt
-     * @return returns encrypted message
+     * decrypts the message with Caesar cipher
+     * @param msg String to decrypt
+     * @param key key to use for the decrypt
+     * @return returns decrypted message
      */
     private String decryptionCaesarCipher(String msg, int key) {
         StringBuilder decryptedMessage = new StringBuilder();
