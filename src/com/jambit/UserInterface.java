@@ -1,5 +1,8 @@
 package com.jambit;
 
+import javafx.stage.FileChooser;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -16,6 +19,7 @@ public class UserInterface {
     Charset utf8 = StandardCharsets.UTF_8;
     private String message;
     private String encryptionKey;
+    String path;
 
     public String getMessage() {
         return message;
@@ -61,12 +65,13 @@ public class UserInterface {
                     setEncryptionKey(keyMessage);
                     break;
                 case 2:
-                    System.out.println("Enter your file Path: ");
+                    fileChooser();
+                    /**System.out.println("Enter your file Path: ");
                     String path;
                     input.nextLine();
                     path = input.next();
                     path = path.replaceAll("[\\u202A]", "");
-                    System.out.println(path);
+                    System.out.println(path);**/
                     try {
                         setMessage(readFileAsString(path));
                     } catch (NoSuchFileException e) {
@@ -141,6 +146,15 @@ public class UserInterface {
         String str = encryptedMessage;
         Files.write(Paths.get("res/encrypted_file.txt"), Collections.singleton(str), utf8);
 
+
+    }
+    void fileChooser(){
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            String fileAsString = file.toString();
+            System.out.println(fileAsString);
+        }
 
     }
 
