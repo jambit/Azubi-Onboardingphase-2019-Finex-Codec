@@ -12,7 +12,7 @@ class EncrypterTest {
   public static void initAll() {}
 
   @BeforeEach
-   void init() {
+  void init() {
     encrypter = new Encrypter();
   }
 
@@ -38,7 +38,6 @@ class EncrypterTest {
     String input = "ABC";
     String out = encrypter.encrypt(input);
     String key = encrypter.getEncryptionKey();
-    encrypter = new Encrypter();
     assertEquals(out, encrypter.encrypt(input, key));
   }
 }
