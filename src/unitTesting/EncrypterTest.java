@@ -3,8 +3,7 @@ package unitTesting;
 import com.jambit.Encrypter;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EncrypterTest {
     Encrypter encrypter = new Encrypter();
@@ -15,7 +14,6 @@ class EncrypterTest {
     }
 
     @Test
-    @Order(1)
     @DisplayName("Basic Encryption")
     void basicEncryption() {
         String input = "ABC";
@@ -23,7 +21,6 @@ class EncrypterTest {
     }
 
     @Test
-    @Order(2)
     @DisplayName("Frequent (Basic) Encryption")
     void frequentBasicEncryption() {
         String input = "ABC";
@@ -33,9 +30,8 @@ class EncrypterTest {
     }
 
     @Test
-    @Order(3)
     @DisplayName("Random Encryption")
-    void frequentRandomEncryption() {
+    void randomEncryption() {
         String input = "ABC";
         String out = encrypter.encrypt(input);
         assertEquals(out, encrypter.encrypt(input, encrypter.getEncryptionKey()));
