@@ -11,34 +11,41 @@ import java.util.Collections;
 import java.util.Scanner;
 
 class UserInterface {
-    private Scanner input = new Scanner(System.in);
+    String fileName = "/encrypted_file.txt";
+    private Scanner input;
     private String pathName = "";
-    private Charset utf8 = StandardCharsets.UTF_8;
+    private Charset charsetUTF8;
     private String message;
     private String encryptionKey;
-    private JFileChooser fileChooser = new JFileChooser();
+    private JFileChooser fileChooser;
     private FileNameExtensionFilter filterOpen = new FileNameExtensionFilter("Text Files", "txt");
+
+    public UserInterface() {
+        input = new Scanner(System.in);
+        fileChooser = new JFileChooser();
+        charsetUTF8 = StandardCharsets.UTF_8;
+    }
 
     String getMessage() {
         return message;
     }
 
-    private void setMessage(String messageToSet) {
-        message = messageToSet;
+    private void setMessage(String message) {
+        this.message = message;
     }
 
     String getEncryptionKey() {
         return encryptionKey;
     }
 
-    private void setEncryptionKey(String encryptionKeyToSet) {
-        encryptionKey = encryptionKeyToSet;
+    private void setEncryptionKey(String encryptionKey) {
+        this.encryptionKey = encryptionKey;
     }
 
     /**
      * starts the main menu of the encrypter
      */
-    void ascii() throws Exception {
+    void opensTitleScreen() throws Exception {
         System.out.println("  ______                             _            \n" +
                 " |  ____|                           | |           \n" +
                 " | |__   _ __   ___ _ __ _   _ _ __ | |_ ___ _ __ \n" +
@@ -58,10 +65,10 @@ class UserInterface {
 
         switch (menuChoice) {
             case 1:
-                userInputMessage();
+                printUserInputMessage();
                 break;
             case 2:
-                textFileMessage();
+                createTextFile();
 
                 break;
             default:
@@ -115,7 +122,7 @@ class UserInterface {
         return data;
     }
 
-    void fileWriterBrowser(String message) throws Exception {
+    void openFileBrowser(String message) throws Exception {
         pathName = openFileChooserSave();
         writeToFile(message);
     }
@@ -127,10 +134,10 @@ class UserInterface {
      */
 
     void writeToFile(String encryptedMessage) throws Exception {
-        File file = new File(pathName + "/encrypted_file.txt");
+        File file = new File(pathName + fileName);
         try {
             if (file.createNewFile()) {
-                System.out.println("\nFile Created\n");
+                System.out.println("\nFile created\n");
             } else {
                 System.err.println("File already exists!\n");
                 System.out.println("Do you want to override it? \n[Y]/[N]");
@@ -154,7 +161,7 @@ class UserInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Files.write(Paths.get(pathName + "/encrypted_file.txt"), Collections.singleton(encryptedMessage), utf8);
+        Files.write(Paths.get(pathName + fileName), Collections.singleton(encryptedMessage), charsetUTF8);
 
 
     }
@@ -162,13 +169,13 @@ class UserInterface {
     /**
      * scanner for the custom user input
      */
-    private void userInputMessage() {
+    private void printUserInputMessage() {
         String enterMessage;
         System.out.println("Enter your message:");
         input.nextLine();
         enterMessage = input.nextLine();
         setMessage(enterMessage);
-        System.out.println("Enter your Encryption Key or leave it blank to randomize it: ");
+        System.out.println("Enter your encryption Key or leave it blank to randomize it: ");
         System.out.println("Use this format: [xxx:xxx]");
         String keyMessage;
         keyMessage = input.nextLine();
@@ -178,7 +185,7 @@ class UserInterface {
     /**
      * opens the file chooser and sets the users path
      */
-    private void textFileMessage() throws Exception {
+    private void createTextFile() throws Exception {
         String path;
         path = openFileChooserOpen();
         path = path.replaceAll("[\\u202A]", "");
@@ -200,7 +207,7 @@ class UserInterface {
             Thread.sleep(500);
             startMenu();
         }
-        System.out.println("Enter your Encryption Key or enter 0 to randomize it: ");
+        System.out.println("Enter your encryption Key or enter 0 to randomize it: ");
         System.out.println("Use this format: [xxx:xxx]");
         String keyFile;
         input.nextLine();
