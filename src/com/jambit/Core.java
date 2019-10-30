@@ -11,7 +11,7 @@ public class Core {
         if(!message.equals("") && !key.equals("")){
             encryptedMessage = encrypter.encrypt(message, key);
         }
-        else if(!message.equals("") && key.equals("")){
+        else if((!message.equals("") && key.equals(""))){
             encryptedMessage = encrypter.encrypt(message);
         }
         System.out.println("Message: " + encryptedMessage);

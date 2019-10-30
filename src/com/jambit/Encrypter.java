@@ -5,8 +5,7 @@ import java.util.Random;
 /** Encrypts messages with a key */
 public class Encrypter {
   private String encryptionKey;
-  static final String charSet =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß0123456789,.!?\"§$%&/()=+-*\\_#~<>| ";
+  static final String charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß0123456789,.!?\"§$%&/()=+-*\\_#~<>| ";
 
   public String getEncryptionKey() {
     return encryptionKey + "";
