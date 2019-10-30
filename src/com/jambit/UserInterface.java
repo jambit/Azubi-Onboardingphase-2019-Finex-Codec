@@ -54,10 +54,10 @@ class UserInterface {
                 " |______|_| |_|\\___|_|   \\__, | .__/ \\__\\___|_|   \n" +
                 "                          __/ | |                 \n" +
                 "                         |___/|_|                 ");
-        startMenu();
+        printMenu();
     }
 
-    private void startMenu() throws Exception {
+    private void printMenu() throws Exception {
         System.out.println("\nChoose encryption method:");
         System.out.println("[1]Enter Message\n[2]Enter File");
 
@@ -69,12 +69,11 @@ class UserInterface {
                 break;
             case 2:
                 createTextFile();
-
                 break;
             default:
-                System.out.println("Invalid Input");
+                System.out.println("Invalid input");
                 Thread.sleep(500);
-                startMenu();
+                printMenu();
         }
 
 
@@ -85,41 +84,29 @@ class UserInterface {
      *
      * @return returns the choosen file path
      */
-    private String openFileChooserOpen() throws Exception {
+    private String openFileChooser() throws Exception {
         try {
             fileChooser.setFileFilter(filterOpen);
             fileChooser.showOpenDialog(null);
             return fileChooser.getSelectedFile().getAbsolutePath();
         } catch (NullPointerException e) {
             System.err.println("\nAction cancelled!");
-            startMenu();
+            printMenu();
             return null;
         }
     }
 
     private String openFileChooserSave() throws Exception {
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        try {
-            fileChooser.setFileFilter(filterOpen);
-            fileChooser.showOpenDialog(null);
-            return fileChooser.getSelectedFile().getAbsolutePath();
-        } catch (NullPointerException e) {
-            System.err.println("\nAction cancelled!");
-            startMenu();
-            return null;
-        }
+        return openFileChooser();
     }
 
     /**
-     * reads out a textfile and saves its content into a string
-     *
-     * @param fileName input by the file chooser
-     * @return returns the string
+     * @param fileName path of the file
+     * @return returns the files content
      */
     private String readFileAsString(String fileName) throws IOException {
-        String data;
-        data = new String(Files.readAllBytes(Paths.get(fileName)));
-        return data;
+        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
     void openFileBrowser(String message) throws Exception {
@@ -133,7 +120,7 @@ class UserInterface {
      * @param encryptedMessage defines string to write to file
      */
 
-    void writeToFile(String encryptedMessage) throws Exception {
+    private void writeToFile(String encryptedMessage) throws Exception {
         File file = new File(pathName + fileName);
         try {
             if (file.createNewFile()) {
@@ -149,10 +136,10 @@ class UserInterface {
                     } else {
                         System.err.println("Unable to delete!");
                         Thread.sleep(500);
-                        startMenu();
+                        printMenu();
                     }
                 } else {
-                    startMenu();
+                    printMenu();
                 }
 
             }
@@ -187,7 +174,7 @@ class UserInterface {
      */
     private void createTextFile() throws Exception {
         String path;
-        path = openFileChooserOpen();
+        path = openFileChooser();
         path = path.replaceAll("[\\u202A]", "");
         System.out.println(path);
         try {
@@ -195,17 +182,17 @@ class UserInterface {
         } catch (NoSuchFileException e) {
             System.err.println("No textfile found under that path");
             Thread.sleep(500);
-            startMenu();
+            printMenu();
         } catch (InvalidPathException e) {
             System.err.println("Invalid Path Exception");
             System.out.println("Enter a valid path!");
             Thread.sleep(500);
-            startMenu();
+            printMenu();
         } catch (IOException e) {
             System.err.println("IO error occured: " + e);
             System.out.println(e);
             Thread.sleep(500);
-            startMenu();
+            printMenu();
         }
         System.out.println("Enter your encryption Key or enter 0 to randomize it: ");
         System.out.println("Use this format: [xxx:xxx]");
