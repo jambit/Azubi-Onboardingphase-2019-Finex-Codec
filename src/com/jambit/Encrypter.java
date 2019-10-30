@@ -32,12 +32,12 @@ public class Encrypter {
    */
   public String encrypt(String msg, String encryptionKey) {
     int ccKey;
+    this.encryptionKey = encryptionKey;
     String newCharSet = charSet;
     String[] keys = splitKey(encryptionKey);
     if (keys.length == 2) {
       newCharSet = randomCharSet(Integer.parseInt(keys[0]));
       ccKey = Integer.parseInt(keys[1]);
-      System.out.println("Test");
     } else {
       ccKey = Integer.parseInt(keys[0]);
     }
