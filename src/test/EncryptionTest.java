@@ -1,19 +1,30 @@
-package test;
-
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.jambit.Encrypter;
 
+import java.util.Random;
+
 class EncryptionTest {
   Encrypter encrypter = new Encrypter();
+  Random rand = new Random();
+
+  String generateRandomText(int length){
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < length; i++) {
+      sb.append(Encrypter.charSet.charAt(rand.nextInt(Encrypter.charSet.length())));
+    }
+    return sb.toString();
+  }
 
   @BeforeAll
-  public static void initAll() {}
+  public static void initAll() {
+  }
 
   @BeforeEach
   void init() {
     encrypter = new Encrypter();
+    rand = new Random();
   }
 
   @Test
@@ -35,9 +46,15 @@ class EncryptionTest {
   @Test
   @DisplayName("Random Encryption")
   void randomEncryption() {
-    String input = "ABC";
-    String out = encrypter.encrypt(input);
-    String key = encrypter.getEncryptionKey();
-    assertEquals(out, encrypter.encrypt(input, key));
+    String input = generateRandomText(rand.nextInt(50));
+    assertEquals(input , encrypter.decrypt(encrypter.encrypt(input), encrypter.getEncryptionKey()));
+  }
+
+  @Test
+  @DisplayName("Encryption Length Test")
+  void lengthTest() {
+    String input = generateRandomText(1_483_647);
+    String encrypted = encrypter.encrypt(input);
+    assertEquals(input, encrypter.decrypt(encrypted, encrypter.getEncryptionKey()));
   }
 }
