@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 public class UserInterface {
     Scanner input = new Scanner(System.in);
-    Encrypter encrypter = new Encrypter();
     File file = new File("res/encrypted_file.txt");
     Charset utf8 = StandardCharsets.UTF_8;
     private String message;
@@ -37,6 +36,9 @@ public class UserInterface {
         encryptionKey = encryptionKeyToSet;
     }
 
+    /**
+     * starts the main menu of the encrypter
+     */
     void startMenu() throws Exception {
         System.out.println("  ______                             _            \n" +
                 " |  ____|                           | |           \n" +
@@ -50,51 +52,13 @@ public class UserInterface {
         System.out.println("[1]Enter Message\n[2]Enter File");
 
         int menuChoice = input.nextInt();
-        try {
+
             switch (menuChoice) {
                 case 1:
-                    String enterMessage;
-                    System.out.println("Enter your message:\n");
-                    input.nextLine();
-                    enterMessage = input.nextLine();
-                    setMessage(enterMessage);
-                    System.out.println("Enter your Encryption Key or enter 0 to randomize it: ");
-                    System.out.println("Use this format: [xxx:xxx]");
-                    String keyMessage;
-                    keyMessage = input.nextLine();
-                    setEncryptionKey(keyMessage);
+                    userInputMessage();
                     break;
                 case 2:
-                    //System.out.println("Enter your file Path: ");
-                    String path;
-                    //input.nextLine();
-                    //path = input.next();
-                    path = openFileChooser();
-                    path = path.replaceAll("[\\u202A]", "");
-                    System.out.println(path);
-                    try {
-                        setMessage(readFileAsString(path));
-                    } catch (NoSuchFileException e) {
-                        System.err.println("No textfile found under that path");
-                        Thread.sleep(500);
-                        startMenu();
-                    } catch (InvalidPathException e) {
-                        System.err.println("Invalid Path Exception");
-                        System.out.println("Enter a valid path!");
-                        Thread.sleep(500);
-                        startMenu();
-                    } catch (IOException e) {
-                        System.err.println("IO error occured: " + e);
-                        System.out.println(e);
-                        Thread.sleep(500);
-                        startMenu();
-                    }
-                    System.out.println("Enter your Encryption Key or enter 0 to randomize it: ");
-                    System.out.println("Use this format: [xxx:xxx]");
-                    String keyFile;
-                    keyFile = input.next();
-
-                    setEncryptionKey(keyFile);
+                    textFileMessage();
 
                     break;
                 default:
@@ -102,14 +66,14 @@ public class UserInterface {
                     Thread.sleep(500);
                     startMenu();
             }
-        } catch (InputMismatchException e) {
-            System.err.println("Invalid input!");
-            Thread.sleep(500);
-            startMenu();
-        }
+
 
     }
 
+    /**
+     * method to open the GUI file chooser
+     * @return returns the choosen file path
+     */
     String openFileChooser() {
         fileChooser.setFileFilter(filter);
         fileChooser.showOpenDialog(null);
@@ -117,12 +81,21 @@ public class UserInterface {
 
     }
 
+    /**
+     * reads out a textfile and saves its content into a string
+     * @param fileName input by the file chooser
+     * @return returns the string
+     */
     public String readFileAsString(String fileName) throws IOException {
         String data = "";
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
     }
 
+    /**
+     * creates a file and overrides existing ones
+     * @param encryptedMessage defines string to write to file
+     */
     public void writeToFile(String encryptedMessage) throws IOException {
         try {
             if (file.createNewFile()) {
@@ -154,6 +127,56 @@ public class UserInterface {
         Files.write(Paths.get("res/encrypted_file.txt"), Collections.singleton(str), utf8);
 
 
+    }
+
+    /**
+     * scanner for the custom user input
+     */
+    void userInputMessage(){
+        String enterMessage;
+        System.out.println("Enter your message:");
+        input.nextLine();
+        enterMessage = input.nextLine();
+        setMessage(enterMessage);
+        System.out.println("Enter your Encryption Key or leave it blank to randomize it: ");
+        System.out.println("Use this format: [xxx:xxx]");
+        String keyMessage;
+        keyMessage = input.nextLine();
+        setEncryptionKey(keyMessage);
+    }
+
+    /**
+     *opens the file chooser and sets the users path
+     */
+    void textFileMessage() throws Exception {
+        String path;
+        path = openFileChooser();
+        path = path.replaceAll("[\\u202A]", "");
+        System.out.println(path);
+        try {
+            setMessage(readFileAsString(path));
+        } catch (NoSuchFileException e) {
+            System.err.println("No textfile found under that path");
+            Thread.sleep(500);
+            startMenu();
+        } catch (InvalidPathException e) {
+            System.err.println("Invalid Path Exception");
+            System.out.println("Enter a valid path!");
+            Thread.sleep(500);
+            startMenu();
+        } catch (IOException e) {
+            System.err.println("IO error occured: " + e);
+            System.out.println(e);
+            Thread.sleep(500);
+            startMenu();
+        }
+        System.out.println("Enter your Encryption Key or enter 0 to randomize it: ");
+        System.out.println("Use this format: [xxx:xxx]");
+        String keyFile;
+        input.nextLine();
+        keyFile = input.nextLine();
+
+        setEncryptionKey(keyFile);
     }
 
 
