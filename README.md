@@ -1,14 +1,27 @@
-# Encryptier
-Encrypts files and small messages with a more complex caesar Cipher.
+# Finex Codec
 [![Build Status](https://travis-ci.org/jambit/Encryption.svg?branch=master)](https://travis-ci.org/jambit/Encryption)
+\
 [![GitHub issues](https://img.shields.io/github/issues/jambit/Encryption)](https://github.com/jambit/Encryption/issues)
+\
+A software to en- and decrypt using common or custom encryption algorithms.
 ## How to run the code ?
-Use the following command in a bash to run the project
-```console
-foo@bar:~$ ./gradlew run --console=plain
-```
+####1. Build project
+Open any type of terminal and enter following command
+#####Windows (cmd)
 
-## Build project
+```console
+C:\project\directory> gradlew.bat build
+```
+#####Linux  
 ```console
 foo@bar:~$ ./gradlew build
+```
+####2. Run project
+#####Windows (cmd)
+```console
+C:\project\directory> gradlew.bat run --console=plain
+```
+#####Linux
+```console
+foo@bar:~$ ./gradlew run --console=plain
 ```
