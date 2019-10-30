@@ -1,15 +1,20 @@
-package unitTesting;
+package test;
 
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.jambit.Encrypter;
-import org.junit.jupiter.api.*;
 
-class EncrypterTest {
+class EncryptionTest {
   Encrypter encrypter = new Encrypter();
 
   @BeforeAll
   public static void initAll() {}
+
+  @BeforeEach
+  void init() {
+    encrypter = new Encrypter();
+  }
 
   @Test
   @DisplayName("Basic Encryption")
@@ -32,6 +37,7 @@ class EncrypterTest {
   void randomEncryption() {
     String input = "ABC";
     String out = encrypter.encrypt(input);
-    assertEquals(out, encrypter.encrypt(input, encrypter.getEncryptionKey()));
+    String key = encrypter.getEncryptionKey();
+    assertEquals(out, encrypter.encrypt(input, key));
   }
 }
