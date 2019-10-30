@@ -6,13 +6,13 @@ import com.jambit.caesarCodec;
 import java.util.Random;
 
 class CaesarCodecTest {
-  caesarCodec caesarCodec = new caesarCodec();
-  Random rand = new Random();
+  private caesarCodec caesarCodec = new caesarCodec();
+  private Random rand = new Random();
 
   String generateRandomText(int length){
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < length; i++) {
-      sb.append(caesarCodec.charSet.charAt(rand.nextInt(caesarCodec.charSet.length())));
+      sb.append(com.jambit.caesarCodec.charSet.charAt(rand.nextInt(com.jambit.caesarCodec.charSet.length())));
     }
     return sb.toString();
   }

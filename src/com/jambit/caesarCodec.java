@@ -33,6 +33,7 @@ public class caesarCodec {
      * @return returns a encrypted String
      */
     public String encrypt(String msg, String encryptionKey) {
+        StringBuilder encryptedString = new StringBuilder();
         int ccKey;
         this.encryptionKey = encryptionKey;
         String newCharSet = charSet;
@@ -43,7 +44,16 @@ public class caesarCodec {
         } else {
             ccKey = Integer.parseInt(keys[0]);
         }
-        return encryptionCaesarCipher(msg, ccKey, newCharSet);
+
+        String[] splitLine = splitLine(msg);
+        for (int i = 0; i < splitLine.length; i++) {
+            encryptedString.append(encryptionCaesarCipher(splitLine[i], ccKey, newCharSet));
+            if (i + 1 != splitLine.length) {
+                encryptedString.append("\n");
+            }
+        }
+
+        return encryptedString.toString();
     }
 
     public String decrypt(String msg, String encryptionKey) {
@@ -92,7 +102,7 @@ public class caesarCodec {
      * @param seed seed to use for the randomization
      * @return updated char set
      */
-    public String randomCharSet(int seed) {
+    private String randomCharSet(int seed) {
         Random generator = new Random(seed);
         String newCharSet = charSet;
         for (int i = 1; i < generator.nextInt(1000); i++) {
@@ -137,6 +147,20 @@ public class caesarCodec {
      * @return a String array with all keys
      */
     private String[] splitKey(String key) {
-        return key.split("[:]");
+        if (key.contains(":")) {
+            return key.split("[:]");
+        } else {
+            String[] i = {key};
+            return i;
+        }
+    }
+
+    private String[] splitLine(String msg) {
+        if (msg.contains("\n")) {
+            return msg.split("\r\n");
+        } else {
+            String[] i = {msg};
+            return i;
+        }
     }
 }
