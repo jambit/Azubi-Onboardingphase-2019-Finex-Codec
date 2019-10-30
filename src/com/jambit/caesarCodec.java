@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Encrypts messages with a key
  */
-public class Encrypter {
+public class caesarCodec {
     private String encryptionKey;
     public static final String charSet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß0123456789,.!?\"§$%&/()=+-*\\_#~<>| ";

@@ -1,18 +1,18 @@
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.jambit.Encrypter;
+import com.jambit.caesarCodec;
 
 import java.util.Random;
 
-class EncryptionTest {
-  Encrypter encrypter = new Encrypter();
+class CaesarCodecTest {
+  caesarCodec caesarCodec = new caesarCodec();
   Random rand = new Random();
 
   String generateRandomText(int length){
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < length; i++) {
-      sb.append(Encrypter.charSet.charAt(rand.nextInt(Encrypter.charSet.length())));
+      sb.append(caesarCodec.charSet.charAt(rand.nextInt(caesarCodec.charSet.length())));
     }
     return sb.toString();
   }
@@ -23,7 +23,7 @@ class EncryptionTest {
 
   @BeforeEach
   void init() {
-    encrypter = new Encrypter();
+    caesarCodec = new caesarCodec();
     rand = new Random();
   }
 
@@ -31,7 +31,7 @@ class EncryptionTest {
   @DisplayName("Basic Encryption")
   void basicEncryption() {
     String input = "ABC";
-    assertEquals("FGH", encrypter.encrypt(input, "5"));
+    assertEquals("FGH", caesarCodec.encrypt(input, "5"));
   }
 
   @Test
@@ -39,7 +39,7 @@ class EncryptionTest {
   void frequentBasicEncryption() {
     String input = "ABC";
     for (int i = 0; i < 10; i++) {
-      assertEquals("PQR", encrypter.encrypt(input, "15"));
+      assertEquals("PQR", caesarCodec.encrypt(input, "15"));
     }
   }
 
@@ -47,14 +47,14 @@ class EncryptionTest {
   @DisplayName("Random Encryption")
   void randomEncryption() {
     String input = generateRandomText(rand.nextInt(50));
-    assertEquals(input , encrypter.decrypt(encrypter.encrypt(input), encrypter.getEncryptionKey()));
+    assertEquals(input , caesarCodec.decrypt(caesarCodec.encrypt(input), caesarCodec.getEncryptionKey()));
   }
 
   @Test
   @DisplayName("Encryption Length Test")
   void lengthTest() {
     String input = generateRandomText(1_483_647);
-    String encrypted = encrypter.encrypt(input);
-    assertEquals(input, encrypter.decrypt(encrypted, encrypter.getEncryptionKey()));
+    String encrypted = caesarCodec.encrypt(input);
+    assertEquals(input, caesarCodec.decrypt(encrypted, caesarCodec.getEncryptionKey()));
   }
 }
