@@ -59,17 +59,17 @@ class UserInterface {
         System.out.println("\nChoose encryption method:");
         System.out.println("[1]Enter Message\n[2]Enter File");
 
-        int menuChoice = input.nextInt();
+        String menuChoice = input.next();
 
         switch (menuChoice) {
-            case 1:
+            case "1":
                 enterACustomMessage();
                 break;
-            case 2:
+            case "2":
                 textFileChooser();
                 break;
             default:
-                System.out.println("Invalid input");
+                System.err.println("Invalid input");
                 Thread.sleep(500);
                 printMenu();
         }
@@ -151,8 +151,7 @@ class UserInterface {
         }else {
             openFileChooserSave();
         }
-
-
+        System.exit(0);
     }
 
     /**
