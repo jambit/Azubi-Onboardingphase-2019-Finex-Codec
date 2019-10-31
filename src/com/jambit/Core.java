@@ -16,7 +16,7 @@ public class Core {
         }
         System.out.println("Message: " + encryptedMessage);
         System.out.println("Key: " + caesarCodec.getEncryptionKey());
-        ui.openFileBrowser(encryptedMessage);
+        ui.saveFileChooser(encryptedMessage);
 
     }
 }
