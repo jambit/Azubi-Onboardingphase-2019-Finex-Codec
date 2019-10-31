@@ -3,8 +3,8 @@ package com.jambit;
 public class Core {
     public static void main(String[] args) throws Exception {
         UserInterface ui = new UserInterface();
-        CaesarCodec caesarCodec = new CaesarCodec();
-        ui.startMenu();
+        caesarCodec caesarCodec = new caesarCodec();
+        ui.opensTitleScreen();
         String key = ui.getEncryptionKey();
         String message = ui.getMessage();
         String encryptedMessage = "";
@@ -16,7 +16,7 @@ public class Core {
         }
         System.out.println("Message: " + encryptedMessage);
         System.out.println("Key: " + caesarCodec.getEncryptionKey());
-        ui.writeToFile(encryptedMessage);
+        ui.openFileBrowser(encryptedMessage);
 
     }
 }
