@@ -5,23 +5,23 @@
 \
 A software to en- and decrypt using common or custom encryption algorithms.
 ## How to run the code ?
-####1. Build project
+#### 1. Build project
 Open any type of terminal and enter following command
-#####Windows (cmd)
+##### Windows (cmd)
 
 ```console
 C:\project\directory> gradlew.bat build
 ```
-#####Linux  
+##### Linux  
 ```console
 foo@bar:~$ ./gradlew build
 ```
-####2. Run project
-#####Windows (cmd)
+#### 2. Run project
+##### Windows (cmd)
 ```console
 C:\project\directory> gradlew.bat run --console=plain
 ```
-#####Linux
+##### Linux
 ```console
 foo@bar:~$ ./gradlew run --console=plain
 ```
