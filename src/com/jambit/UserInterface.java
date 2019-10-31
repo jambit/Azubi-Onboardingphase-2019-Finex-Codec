@@ -193,7 +193,6 @@ class UserInterface {
     private void chooseATextFile() throws Exception {
         String path;
         path = fileChooserOpen();
-        path = path.replaceAll("[\\u202A]", "");
         System.out.println(path);
         try {
             setMessage(readFileAsString(path));
