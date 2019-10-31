@@ -66,7 +66,7 @@ class UserInterface {
                 enterACustomMessage();
                 break;
             case 2:
-                textFileChooser();
+                chooseATextFile();
                 break;
             default:
                 System.out.println("Invalid input");
@@ -174,7 +174,7 @@ class UserInterface {
     /**
      * opens the file chooser and sets the users path
      */
-    private void textFileChooser() throws Exception {
+    private void chooseATextFile() throws Exception {
         String path;
         path = openFileChooser();
         path = path.replaceAll("[\\u202A]", "");
