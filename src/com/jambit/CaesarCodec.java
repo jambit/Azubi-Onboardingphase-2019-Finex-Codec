@@ -1,5 +1,6 @@
 package com.jambit;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -139,7 +140,7 @@ public class CaesarCodec {
      * @param key key you want to split
      * @return a String array with all keys
      */
-    private String[] splitKey(String key) {
+    static public String[] splitKey(String key) {
         if (key.contains(":")) {
             return key.split("[:]");
         } else {
