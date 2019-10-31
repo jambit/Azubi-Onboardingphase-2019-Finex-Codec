@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Encrypts messages with a key
  */
-public class caesarCodec {
+public class CaesarCodec {
     private String encryptionKey;
     public static final String charSet =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖabcdefghijklmnopqrstuvwxyzäüöß0123456789,.!?\"§$%&/()=+-*\\_#~<>| ";
@@ -18,7 +18,7 @@ public class caesarCodec {
      * encrypts a String with a random key
      *
      * @param msg String to encrypt
-     * @return returns a encrypted String
+     * @return returns an encrypted String
      */
     public String encrypt(String msg) {
         encryptionKey = generateKey();
@@ -34,20 +34,15 @@ public class caesarCodec {
      */
     public String encrypt(String msg, String encryptionKey) {
         StringBuilder encryptedString = new StringBuilder();
-        int ccKey;
+        KeyDetector keyDetector = new KeyDetector();
+
         this.encryptionKey = encryptionKey;
-        String newCharSet = charSet;
         String[] keys = splitKey(encryptionKey);
-        if (keys.length == 2) {
-            newCharSet = randomCharSet(Integer.parseInt(keys[0]));
-            ccKey = Integer.parseInt(keys[1]);
-        } else {
-            ccKey = Integer.parseInt(keys[0]);
-        }
+        keyDetector.detectKeys(keys);
 
         String[] splitLine = splitLine(msg);
         for (int i = 0; i < splitLine.length; i++) {
-            encryptedString.append(encryptionCaesarCipher(splitLine[i], ccKey, newCharSet));
+            encryptedString.append(encryptionCaesarCipher(splitLine[i], keyDetector.caesarCodecKey, keyDetector.newCharSet));
             if (i + 1 != splitLine.length) {
                 encryptedString.append("\n");
             }
@@ -57,17 +52,13 @@ public class caesarCodec {
     }
 
     public String decrypt(String msg, String encryptionKey) {
-        int ccKey;
+        KeyDetector keyDetector = new KeyDetector();
+
         this.encryptionKey = encryptionKey;
-        String newCharSet = charSet;
         String[] keys = splitKey(encryptionKey);
-        if (keys.length == 2) {
-            newCharSet = randomCharSet(Integer.parseInt(keys[0]));
-            ccKey = Integer.parseInt(keys[1]);
-        } else {
-            ccKey = Integer.parseInt(keys[0]);
-        }
-        return encryptionCaesarCipher(msg, (ccKey * -1), newCharSet);
+        keyDetector.detectKeys(keys);
+
+        return encryptionCaesarCipher(msg, (keyDetector.caesarCodecKey * -1), keyDetector.newCharSet);
     }
 
     /**
@@ -105,6 +96,7 @@ public class caesarCodec {
     private String randomCharSet(int seed) {
         Random generator = new Random(seed);
         String newCharSet = charSet;
+
         for (int i = 1; i < generator.nextInt(1000); i++) {
             for (int j = 0; j < newCharSet.length(); j++) {
                 generator = new Random(seed + (i * 3 * (j + 1)));
@@ -112,6 +104,7 @@ public class caesarCodec {
                 newCharSet = swapIndex(newCharSet, j, randNum);
             }
         }
+
         return newCharSet;
     }
 
@@ -159,8 +152,22 @@ public class caesarCodec {
         if (msg.contains("\n")) {
             return msg.split("\r\n");
         } else {
-            String[] i = {msg};
-            return i;
+            String[] splittedMessage = {msg};
+            return splittedMessage;
+        }
+    }
+
+    private class KeyDetector {
+        public String newCharSet = charSet;
+        public int caesarCodecKey;
+
+        public void detectKeys(String[] keys){
+            if (keys.length == 2) {
+                newCharSet = randomCharSet(Integer.parseInt(keys[0]));
+                caesarCodecKey = Integer.parseInt(keys[1]);
+            } else {
+                caesarCodecKey = Integer.parseInt(keys[0]);
+            }
         }
     }
 }
