@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 class UserInterface {
-    String fileName = "/encrypted_file.txt";
+    private String fileName;
     private Scanner input;
     private Charset charsetUTF8;
     private String message;
@@ -20,8 +20,8 @@ class UserInterface {
     private FileNameExtensionFilter filterOpen = new FileNameExtensionFilter("Text Files", "txt");
     private FileNameExtensionFilter filterSave = new FileNameExtensionFilter("Directories", "/");
 
-    public UserInterface() {
-        input = new Scanner(System.in, "UTF-8");
+    UserInterface() {
+        input = new Scanner(System.in, StandardCharsets.UTF_8);
         fileChooser = new JFileChooser();
         charsetUTF8 = StandardCharsets.UTF_8;
     }
@@ -106,7 +106,7 @@ class UserInterface {
         try {
             fileChooser.setFileFilter(filterSave);
             fileChooser.showOpenDialog(null);
-            return fileChooser.getSelectedFile().getAbsolutePath();
+            return fileChooser.getSelectedFile().getAbsolutePath() + "/";
         } catch (NullPointerException e) {
             System.err.println("\nAction cancelled!");
             Thread.sleep(500);
@@ -134,6 +134,8 @@ class UserInterface {
      */
 
     private void writeToFile(String encryptedMessage, String path) throws Exception {
+        System.out.println("Enter a filename: ");
+        fileName = input.nextLine() + ".txt";
         File file = new File(path + fileName);
         try {
             if (file.createNewFile()) {
