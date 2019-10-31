@@ -1,20 +1,20 @@
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.jambit.caesarCodec;
+import com.jambit.CaesarCodec;
 
 import java.util.Random;
 
 class CaesarCodecTest {
-  caesarCodec caesarCodec = new caesarCodec();
-  Random rand = new Random();
+  private CaesarCodec caesarCodec = new CaesarCodec();
+  private Random rand = new Random();
 
   String generateRandomText(int length){
-    StringBuilder sb = new StringBuilder();
+    StringBuilder randomTextBuilder = new StringBuilder();
     for (int i = 0; i < length; i++) {
-      sb.append(caesarCodec.charSet.charAt(rand.nextInt(caesarCodec.charSet.length())));
+      randomTextBuilder.append(CaesarCodec.charSet.charAt(rand.nextInt(CaesarCodec.charSet.length())));
     }
-    return sb.toString();
+    return randomTextBuilder.toString();
   }
 
   @BeforeAll
@@ -23,7 +23,7 @@ class CaesarCodecTest {
 
   @BeforeEach
   void init() {
-    caesarCodec = new caesarCodec();
+    caesarCodec = new CaesarCodec();
     rand = new Random();
   }
 
