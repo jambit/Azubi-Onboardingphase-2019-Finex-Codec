@@ -65,7 +65,7 @@ class UserInterface {
             case "1":
                 enterACustomMessage();
                 break;
-            case 2:
+            case "2":
                 chooseATextFile();
                 break;
             default:
