@@ -11,15 +11,16 @@ import java.util.Collections;
 import java.util.Scanner;
 
 class UserInterface {
-    String fileName = "/encrypted_file.txt";
+    private String fileName;
     private Scanner input;
     private Charset charsetUTF8;
     private String message;
     private String encryptionKey;
     private JFileChooser fileChooser;
     private FileNameExtensionFilter filterOpen = new FileNameExtensionFilter("Text Files", "txt");
+    private FileNameExtensionFilter filterSave = new FileNameExtensionFilter("Directories", "/");
 
-    public UserInterface() {
+    UserInterface() {
         input = new Scanner(System.in, "UTF-8");
         fileChooser = new JFileChooser();
         charsetUTF8 = StandardCharsets.UTF_8;
@@ -79,10 +80,13 @@ class UserInterface {
 
     /**
      * method to open the GUI file chooser
+     * Can't use the same Chooser cause different Filters
      *
      * @return returns the choosen file path
      */
-    private String openFileChooser() throws Exception {
+    private String fileChooserOpen() throws Exception {
+        fileChooser.setApproveButtonText("Open");
+        fileChooser.setDialogTitle("Open");
         try {
             fileChooser.setFileFilter(filterOpen);
             fileChooser.showOpenDialog(null);
@@ -95,9 +99,20 @@ class UserInterface {
         }
     }
 
-    private String openFileChooserSave() throws Exception {
+    private String fileChooserSave() throws Exception {
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        return openFileChooser();
+        fileChooser.setApproveButtonText("Save");
+        fileChooser.setDialogTitle("Save As");
+        try {
+            fileChooser.setFileFilter(filterSave);
+            fileChooser.showOpenDialog(null);
+            return fileChooser.getSelectedFile().getAbsolutePath() + "/";
+        } catch (NullPointerException e) {
+            System.err.println("\nAction cancelled!");
+            Thread.sleep(500);
+            printMenu();
+            return null;
+        }
     }
 
     /**
@@ -109,7 +124,7 @@ class UserInterface {
     }
 
     void saveFileChooser(String message) throws Exception {
-        writeToFile(message, openFileChooserSave());
+        writeToFile(message, fileChooserSave());
     }
 
     /**
@@ -119,6 +134,8 @@ class UserInterface {
      */
 
     private void writeToFile(String encryptedMessage, String path) throws Exception {
+        System.out.println("Enter a filename: ");
+        fileName = input.nextLine() + ".txt";
         File file = new File(path + fileName);
         try {
             if (file.createNewFile()) {
@@ -149,7 +166,7 @@ class UserInterface {
         if(path != null) {
             Files.write(Paths.get(path + fileName), Collections.singleton(encryptedMessage), charsetUTF8);
         }else {
-            openFileChooserSave();
+            fileChooserSave();
         }
         System.exit(0);
     }
@@ -175,7 +192,7 @@ class UserInterface {
      */
     private void chooseATextFile() throws Exception {
         String path;
-        path = openFileChooser();
+        path = fileChooserOpen();
         path = path.replaceAll("[\\u202A]", "");
         System.out.println(path);
         try {
