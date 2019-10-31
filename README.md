@@ -1,5 +1,5 @@
 # Finex Codec
-[![Build Status](https://travis-ci.org/jambit/Encryption.svg?branch=master)](https://travis-ci.org/jambit/Encryption)
+[![Build Status](https://travis-ci.org/jambit/Finex-Codec.svg?branch=master)](https://travis-ci.org/jambit/Finex-Codec)
 \
 [![GitHub issues](https://img.shields.io/github/issues/jambit/Encryption)](https://github.com/jambit/Encryption/issues)
 \
