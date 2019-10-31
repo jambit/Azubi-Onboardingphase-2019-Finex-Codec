@@ -21,7 +21,7 @@ class UserInterface {
     private FileNameExtensionFilter filterSave = new FileNameExtensionFilter("Directories", "/");
 
     UserInterface() {
-        input = new Scanner(System.in, StandardCharsets.UTF_8);
+        input = new Scanner(System.in, "UTF-8");
         fileChooser = new JFileChooser();
         charsetUTF8 = StandardCharsets.UTF_8;
     }
