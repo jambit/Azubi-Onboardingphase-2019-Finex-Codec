@@ -13,7 +13,6 @@ import java.util.Scanner;
 class UserInterface {
     String fileName = "/encrypted_file.txt";
     private Scanner input;
-    private String pathName = "";
     private Charset charsetUTF8;
     private String message;
     private String encryptionKey;
@@ -46,14 +45,13 @@ class UserInterface {
      * starts the main menu of the encrypter
      */
     void opensTitleScreen() throws Exception {
-        System.out.println("  ______                             _            \n" +
-                " |  ____|                           | |           \n" +
-                " | |__   _ __   ___ _ __ _   _ _ __ | |_ ___ _ __ \n" +
-                " |  __| | '_ \\ / __| '__| | | | '_ \\| __/ _ \\ '__|\n" +
-                " | |____| | | | (__| |  | |_| | |_) | ||  __/ |   \n" +
-                " |______|_| |_|\\___|_|   \\__, | .__/ \\__\\___|_|   \n" +
-                "                          __/ | |                 \n" +
-                "                         |___/|_|                 ");
+        System.out.println("  ______ _                    _____          _           \n" +
+                " |  ____(_)                  / ____|        | |          \n" +
+                " | |__   _ _ __   _____  __ | |     ___   __| | ___  ___ \n" +
+                " |  __| | | '_ \\ / _ \\ \\/ / | |    / _ \\ / _` |/ _ \\/ __|\n" +
+                " | |    | | | | |  __/>  <  | |___| (_) | (_| |  __/ (__ \n" +
+                " |_|    |_|_| |_|\\___/_/\\_\\  \\_____\\___/ \\__,_|\\___|\\___|\n" +
+                "                                                         ");
         printMenu();
     }
 
@@ -65,10 +63,10 @@ class UserInterface {
 
         switch (menuChoice) {
             case 1:
-                printUserInputMessage();
+                enterACustomMessage();
                 break;
             case 2:
-                createTextFile();
+                chooseATextFile();
                 break;
             default:
                 System.out.println("Invalid input");
@@ -91,6 +89,7 @@ class UserInterface {
             return fileChooser.getSelectedFile().getAbsolutePath();
         } catch (NullPointerException e) {
             System.err.println("\nAction cancelled!");
+            Thread.sleep(500);
             printMenu();
             return null;
         }
@@ -109,9 +108,8 @@ class UserInterface {
         return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
-    void openFileBrowser(String message) throws Exception {
-        pathName = openFileChooserSave();
-        writeToFile(message);
+    void saveFileChooser(String message) throws Exception {
+        writeToFile(message, openFileChooserSave());
     }
 
     /**
@@ -120,8 +118,8 @@ class UserInterface {
      * @param encryptedMessage defines string to write to file
      */
 
-    private void writeToFile(String encryptedMessage) throws Exception {
-        File file = new File(pathName + fileName);
+    private void writeToFile(String encryptedMessage, String path) throws Exception {
+        File file = new File(path + fileName);
         try {
             if (file.createNewFile()) {
                 System.out.println("\nFile created\n");
@@ -132,7 +130,7 @@ class UserInterface {
                 if (yesNo.equals("Y") || yesNo.equals("y")) {
                     if (file.delete()) {
                         Thread.sleep(1000);
-                        writeToFile(encryptedMessage);
+                        writeToFile(encryptedMessage, path);
                     } else {
                         System.err.println("Unable to delete!");
                         Thread.sleep(500);
@@ -148,7 +146,11 @@ class UserInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Files.write(Paths.get(pathName + fileName), Collections.singleton(encryptedMessage), charsetUTF8);
+        if(path != null) {
+            Files.write(Paths.get(path + fileName), Collections.singleton(encryptedMessage), charsetUTF8);
+        }else {
+            openFileChooserSave();
+        }
 
 
     }
@@ -156,7 +158,7 @@ class UserInterface {
     /**
      * scanner for the custom user input
      */
-    private void printUserInputMessage() {
+    private void enterACustomMessage() {
         String enterMessage;
         System.out.println("Enter your message:");
         input.nextLine();
@@ -172,7 +174,7 @@ class UserInterface {
     /**
      * opens the file chooser and sets the users path
      */
-    private void createTextFile() throws Exception {
+    private void chooseATextFile() throws Exception {
         String path;
         path = openFileChooser();
         path = path.replaceAll("[\\u202A]", "");
