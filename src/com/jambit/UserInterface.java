@@ -21,7 +21,7 @@ class UserInterface {
     private FileNameExtensionFilter filterOpen = new FileNameExtensionFilter("Text Files", "txt");
 
     public UserInterface() {
-        input = new Scanner(System.in);
+        input = new Scanner(System.in, "UTF-8");
         fileChooser = new JFileChooser();
         charsetUTF8 = StandardCharsets.UTF_8;
     }
