@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class RSACodec {
-    public String RSAEncoder(String msg, String key){
+    public String RCAEncrypt(String msg, String key){
         String out = "";
         String[] keys = CaesarCodec.splitKey(key);
         for (int i = 0; i < msg.length(); i++) {

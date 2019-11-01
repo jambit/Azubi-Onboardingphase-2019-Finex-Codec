@@ -22,6 +22,6 @@ public class Core {
 **/
         String[] x = rsaCodec.asymmetricKeyGenerator(3,23);
         System.out.println("keys \n" + x[0] + "\n" + x[1]);
-        rsaCodec.RSAEncoder(rsaCodec.RSAEncoder("FFF", x[0]), x[1]);
+        rsaCodec.RCAEncrypt(rsaCodec.RCAEncrypt("FFF", x[0]), x[1]);
     }
 }
