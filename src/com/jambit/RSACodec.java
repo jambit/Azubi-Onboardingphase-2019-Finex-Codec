@@ -1,77 +1,88 @@
 package com.jambit;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 
 public class RSACodec {
 
-    public String RCAEncrypt(String msg, String key){
-        String out = "";
-        String[] keys = CaesarCodec.splitKey(key);
-        for (int i = 0; i < msg.length(); i++) {
-            int index = CaesarCodec.charSet.indexOf(msg.charAt(i)) + 1;
-            BigInteger bi = new BigInteger(index + "");
-            bi = bi.modPow(new BigInteger(keys[0]), new BigInteger(keys[1]));
-            if (bi.longValue() > CaesarCodec.charSet.length()) {
-                BigInteger devide = bi.divide(new BigInteger(CaesarCodec.charSet.length() + ""));
-                bi = bi.subtract(new BigInteger(CaesarCodec.charSet.length() + "").multiply(devide));
-            }
-            if (bi.longValue() < 0) {
-                BigInteger devide = bi.divide(new BigInteger(CaesarCodec.charSet.length() + ""));
-                bi = bi.subtract(new BigInteger(CaesarCodec.charSet.length() + "").multiply(devide));
-            }
-            char x;
-            if (bi.longValue() == 0) {
-                x = CaesarCodec.charSet.charAt(bi.intValue());
-            }else{
-                x = CaesarCodec.charSet.charAt(bi.intValue() - 1);
-            }
-            out += x;
-        }
-        System.out.println(out);
-        return out;
+  public String RCAEncrypt(String msg, String key) {
+    String out = "";
+    String[] keys = CaesarCodec.splitKey(key);
+    for (int i = 0; i < msg.length(); i++) {
+      long index = CaesarCodec.charSet.indexOf(msg.charAt(i)) + 1;
+      BigInteger bi = new BigInteger(index + "");
+      bi = bi.modPow(new BigInteger(keys[0]), new BigInteger(keys[1]));
+      String x;
+      if (bi.longValue() == 0) {
+        x = bi.longValue() + "";
+      } else {
+        x = ((bi.longValue() - 1) + "");
+      }
+      out += x + " ";
     }
+    System.out.println(out);
+    return out;
+  }
 
-    public void RSADecoder(String msg, String key){
-        String out = "";
-        String[] keys = CaesarCodec.splitKey(key);
-        for (int i = 0; i < msg.length(); i++) {
+  public void RSADecoder(String msg, String key) {
+    String out = "";
+    String[] vars = msg.split(" ");
 
-        }
+    String[] keys = CaesarCodec.splitKey(key);
+    for (int i = 0; i < vars.length; i++) {
+      long index = Long.parseLong(vars[i]) + 1;
+      BigInteger bi = new BigInteger(index + "");
+      bi = bi.modPow(new BigInteger(keys[0]), new BigInteger(keys[1]));
+      String x;
+      if (bi.longValue() == 0) {
+        x = CaesarCodec.charSet.charAt(bi.intValue()) + "";
+      } else {
+        x = CaesarCodec.charSet.charAt(bi.intValue() - 1) + "";
+      }
+      out += x;
     }
+    System.out.println(out);
+  }
 
-    public String[] asymmetricKeyGenerator(long p1, long p2){
-        String[] keys = {"",""};
-        long N = p1 * p2;
-        long o = (p1-1)*(p2-1);
-        long e = commonFactors(N,o).get(0);
-        long i = p1;
-        long d;
-        int j = 0;
-        while(true){
-            i++;
-            if ((e*i)%o == 1){
-                System.out.println(i);
-                if (j > 0) {
-                    d = i;
-                    break;
-                }
-                j++;
-            }
+  public String[] asymmetricKeyGenerator(long p1, long p2) {
+    String[] keys = {"", ""};
+    long N = p1 * p2;
+    long o = (p1 - 1) * (p2 - 1);
+    long e = commonFactors(N, o);
+    long i = 1;
+    long d;
+    int j = 1;
+    long first = 0;
+    while (true) {
+      if ((e * i) % o == 1) {
+        j++;
+        d = i;
+        if (first == 0) {
+          first = d;
+        } else {
+          i = j * first;
         }
-        keys[0] = e + ":" + N;
-        keys[1] = d + ":" + N;
-        return keys;
+        System.out.println(d + "/" + e);
+        if (j > 2) {
+          break;
+        }
+      }
+      i += 2;
     }
+    keys[0] = e + ":" + N;
+    keys[1] = d + ":" + N;
+    return keys;
+  }
 
-    private ArrayList<Long> commonFactors(long factor, long o){
-        ArrayList<Long> arrayList = new ArrayList<Long>();
-        for (long i = 1; i < o; i++) {
-            if(factor % i != 0 && o % i != 0 && i%2 != 0){
-                arrayList = new ArrayList<Long>();
-                arrayList.add(i);
-            }
+  private long commonFactors(long factor, long o) {
+    long out = 0;
+    for (long i = 1; i < o; i++) {
+      if (factor % i != 0 && o % i != 0 && i % 2 != 0) {
+        out = i;
+        if (Math.round(Math.random() * 100) > 1) {
+          break;
         }
-        return arrayList;
+      }
     }
+    return out;
+  }
 }
