@@ -1,27 +1,30 @@
 package com.jambit;
 
-import javax.swing.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class RSACodec {
+
     public String RCAEncrypt(String msg, String key){
         String out = "";
         String[] keys = CaesarCodec.splitKey(key);
         for (int i = 0; i < msg.length(); i++) {
             int index = CaesarCodec.charSet.indexOf(msg.charAt(i)) + 1;
-            long charAt = (long)(Math.pow(index,Long.parseLong(keys[0]))%Long.parseLong(keys[1]));
-            System.out.println(charAt);
-            while(charAt > CaesarCodec.charSet.length()){
-                charAt -= CaesarCodec.charSet.length();
+            BigInteger bi = new BigInteger(index + "");
+            bi = bi.modPow(new BigInteger(keys[0]), new BigInteger(keys[1]));
+            if (bi.longValue() > CaesarCodec.charSet.length()) {
+                BigInteger devide = bi.divide(new BigInteger(CaesarCodec.charSet.length() + ""));
+                bi = bi.subtract(new BigInteger(CaesarCodec.charSet.length() + "").multiply(devide));
             }
-            while (charAt<0){
-                charAt += CaesarCodec.charSet.length();
+            if (bi.longValue() < 0) {
+                BigInteger devide = bi.divide(new BigInteger(CaesarCodec.charSet.length() + ""));
+                bi = bi.subtract(new BigInteger(CaesarCodec.charSet.length() + "").multiply(devide));
             }
             char x;
-            if (charAt == 0){
-                x = CaesarCodec.charSet.charAt((int)charAt);
+            if (bi.longValue() == 0) {
+                x = CaesarCodec.charSet.charAt(bi.intValue());
             }else{
-                x = CaesarCodec.charSet.charAt((int)charAt-1);
+                x = CaesarCodec.charSet.charAt(bi.intValue() - 1);
             }
             out += x;
         }
@@ -49,7 +52,7 @@ public class RSACodec {
             i++;
             if ((e*i)%o == 1){
                 System.out.println(i);
-                if(j > 0) {
+                if (j > 0) {
                     d = i;
                     break;
                 }
@@ -65,6 +68,7 @@ public class RSACodec {
         ArrayList<Long> arrayList = new ArrayList<Long>();
         for (long i = 1; i < o; i++) {
             if(factor % i != 0 && o % i != 0 && i%2 != 0){
+                arrayList = new ArrayList<Long>();
                 arrayList.add(i);
             }
         }

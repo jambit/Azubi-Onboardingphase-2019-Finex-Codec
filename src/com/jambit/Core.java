@@ -20,8 +20,8 @@ public class Core {
         System.out.println("Key: " + caesarCodec.getEncryptionKey());
         ui.saveFileChooser(encryptedMessage);
 **/
-        String[] x = rsaCodec.asymmetricKeyGenerator(3,23);
+        String[] x = rsaCodec.asymmetricKeyGenerator(1217,2963);
         System.out.println("keys \n" + x[0] + "\n" + x[1]);
-        rsaCodec.RCAEncrypt(rsaCodec.RCAEncrypt("FFF", x[0]), x[1]);
+        rsaCodec.RCAEncrypt(rsaCodec.RCAEncrypt("ABC", x[0]), x[1]);
     }
 }
