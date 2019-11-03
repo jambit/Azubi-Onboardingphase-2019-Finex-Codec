@@ -99,7 +99,7 @@ public class RSACodec {
     return out;
   }
 
-  public boolean isPrime(BigInteger num) {
+  private boolean isPrime(BigInteger num) {
     for (BigInteger divider = BigInteger.ONE;
         num.compareTo(divider) > 0;
         divider = divider.add(BigInteger.TWO)) {
