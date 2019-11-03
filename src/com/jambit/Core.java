@@ -41,7 +41,7 @@ public class Core {
             "57,280,268,856,223,100,619,507,809,781,996,738,021,850,347,661,097,823,339,843,797,463,812,950,192,909");
 
     System.out.println("\nPUBLIC KEY\n" + x[0] + "\nPRIVATE KEY\n" + x[1]);
-    String encrypt = rsaCodec.RCAEncrypt(msg, x[0]);
+    String encrypt = rsaCodec.RSAEncrypt(msg, x[0]);
     System.out.println("Encrypt:\n" + encrypt);
     System.out.println("Decrypt:\n" + rsaCodec.RSADecrypt(encrypt, x[1]));
   }
