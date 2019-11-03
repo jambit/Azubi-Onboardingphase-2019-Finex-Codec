@@ -5,17 +5,17 @@ import java.util.Base64;
 
 public class RSACodec {
 
-  public BigInteger primeNumberGenerator(int bitSize) {
-    String number = "";
-    for (int i = 0; i < bitSize; i++) {
-      number += "9";
-    }
-    BigInteger bi = new BigInteger(number);
-    while (!isPrime(bi)) {
-      bi.add(BigInteger.ONE);
-    }
-    return bi;
-  }
+  //  public BigInteger primeNumberGenerator(int bitSize) {
+  //    String number = "";
+  //    for (int i = 0; i < bitSize; i++) {
+  //      number += "9";
+  //    }
+  //    BigInteger bi = new BigInteger(number);
+  //    while (!isPrime(bi)) {
+  //      bi.add(BigInteger.ONE);
+  //    }
+  //    return bi;
+  //  }
 
   public String RCAEncrypt(String msg, String key) {
     String out = "";
@@ -99,18 +99,18 @@ public class RSACodec {
     return out;
   }
 
-  private boolean isPrime(BigInteger num) {
-    for (BigInteger divider = BigInteger.ONE;
-        num.compareTo(divider) > 0;
-        divider = divider.add(BigInteger.TWO)) {
-      if (!divider.equals(num) && !divider.equals(BigInteger.ONE)) {
-        if (num.mod(divider).equals(BigInteger.ZERO)
-            || num.sqrt().compareTo(divider) >= 0
-            || num.mod(BigInteger.TWO).equals(BigInteger.ZERO)) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
+  //  private boolean isPrime(BigInteger num) {
+  //    for (BigInteger divider = BigInteger.ONE;
+  //        num.compareTo(divider) > 0;
+  //        divider = divider.add(BigInteger.TWO)) {
+  //      if (!divider.equals(num) && !divider.equals(BigInteger.ONE)) {
+  //        if (num.mod(divider).equals(BigInteger.ZERO)
+  //            || num.sqrt().compareTo(divider) >= 0
+  //            || num.mod(BigInteger.TWO).equals(BigInteger.ZERO)) {
+  //          return false;
+  //        }
+  //      }
+  //    }
+  //    return true;
+  //  }
 }
