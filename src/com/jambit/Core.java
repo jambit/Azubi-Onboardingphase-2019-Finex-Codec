@@ -43,6 +43,6 @@ public class Core {
     System.out.println("\nPUBLIC KEY\n" + x[0] + "\nPRIVATE KEY\n" + x[1]);
     String encrypt = rsaCodec.RCAEncrypt(msg, x[0]);
     System.out.println("Encrypt:\n" + encrypt);
-    System.out.println("Decrypt:\n" + rsaCodec.RSADecoder(encrypt, x[1]));
+    System.out.println("Decrypt:\n" + rsaCodec.RSADecrypt(encrypt, x[1]));
   }
 }

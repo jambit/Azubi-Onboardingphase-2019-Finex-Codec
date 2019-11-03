@@ -17,7 +17,7 @@ public class RSACodec {
   //    return bi;
   //  }
 
-  public String RCAEncrypt(String msg, String key) {
+  public String RSAEncrypt(String msg, String key) {
     String out = "";
     String[] keys = CaesarCodec.splitKey(key);
     byte[] base64ByteArrayKey1 = Base64.getDecoder().decode(keys[0]);
@@ -39,7 +39,7 @@ public class RSACodec {
     return out;
   }
 
-  public String RSADecoder(String msg, String key) {
+  public String RSADecrypt(String msg, String key) {
     String out = "";
     String[] vars = msg.split(" ");
 
