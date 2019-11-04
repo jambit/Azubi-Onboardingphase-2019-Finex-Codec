@@ -34,7 +34,7 @@ public class RSACodec {
       } else {
         x = ((bi.longValue() - 1) + "");
       }
-      out += x + " ";
+      out += Base64.getEncoder().encodeToString(x.getBytes()) + " ";
     }
     return out;
   }
@@ -42,6 +42,9 @@ public class RSACodec {
   public String RSADecrypt(String msg, String key) {
     String out = "";
     String[] vars = msg.split(" ");
+    for (int i = 0; i < vars.length; i++) {
+      vars[i] = new String(Base64.getDecoder().decode(vars[i]));
+    }
 
     String[] keys = CaesarCodec.splitKey(key);
     byte[] base64ByteArrayKey1 = Base64.getDecoder().decode(keys[0]);
