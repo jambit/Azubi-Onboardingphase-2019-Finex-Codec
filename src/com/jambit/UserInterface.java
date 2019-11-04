@@ -1,7 +1,5 @@
 package com.jambit;
 
-import org.apache.commons.lang3.ObjectUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -29,11 +27,11 @@ class UserInterface {
     charsetUTF8 = StandardCharsets.UTF_8;
   }
 
-  String getEncryptionChoice(){
+  String getEncryptionChoice() {
     return encryptionChoice;
   }
 
-  void setEncryptionChoice(String choice){
+  void setEncryptionChoice(String choice) {
     this.encryptionChoice = choice;
   }
 
@@ -52,18 +50,17 @@ class UserInterface {
   private void setEncryptionKey(String encryptionKey) {
     this.encryptionKey = encryptionKey;
   }
+
   void chooseEncrypterMethod() throws InterruptedException {
     System.out.println("What encryption method:");
     System.out.println("[1]Caeser Cypher\n[2]RSA");
 
     String encrypterChoice = input.next();
-    if(encrypterChoice.equals("1")){
+    if (encrypterChoice.equals("1")) {
       setEncryptionChoice("cc");
-    }
-    else if(encrypterChoice.equals("2")){
+    } else if (encrypterChoice.equals("2")) {
       setEncryptionChoice("rsa");
-    }
-    else{
+    } else {
       System.err.println("Invalid input!");
       Thread.sleep(500);
       chooseEncrypterMethod();
@@ -207,8 +204,8 @@ class UserInterface {
         keyMessage = input.nextLine();
         setEncryptionKey(keyMessage);
       }
-    }catch(NullPointerException e){
-  }
+    } catch (NullPointerException e) {
+    }
   }
 
   /** opens the file chooser and sets the users path */
@@ -242,7 +239,7 @@ class UserInterface {
         keyFile = input.nextLine();
         setEncryptionKey(keyFile);
       }
-    }catch(NullPointerException e){
+    } catch (NullPointerException e) {
 
     }
   }
