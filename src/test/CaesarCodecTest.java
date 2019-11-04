@@ -6,9 +6,9 @@ import org.junit.jupiter.api.*;
 
 class CaesarCodecTest {
   private CaesarCodec caesarCodec = new CaesarCodec();
-  private Random rand = new Random();
+  private static Random rand = new Random();
 
-  String generateRandomText(int length) {
+  public static String generateRandomText(int length) {
     StringBuilder randomTextBuilder = new StringBuilder();
     for (int i = 0; i < length; i++) {
       randomTextBuilder.append(

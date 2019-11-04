@@ -77,7 +77,6 @@ public class RSACodec {
     BigInteger e = coPrimeFactors(N, o);
     BigInteger d = (e.modInverse(o));
     d = d.add(o);
-    System.out.println(e);
     keys[0] =
         Base64.getEncoder().encodeToString(e.toString().getBytes())
             + ":"
