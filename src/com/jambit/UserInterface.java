@@ -1,5 +1,7 @@
 package com.jambit;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -15,6 +17,7 @@ class UserInterface {
   private Scanner input;
   private Charset charsetUTF8;
   private String message;
+  private String encryptionChoice;
   private String encryptionKey;
   private JFileChooser fileChooser;
   private FileNameExtensionFilter filterOpen = new FileNameExtensionFilter("Text Files", "txt");
@@ -24,6 +27,14 @@ class UserInterface {
     input = new Scanner(System.in, "UTF-8");
     fileChooser = new JFileChooser();
     charsetUTF8 = StandardCharsets.UTF_8;
+  }
+
+  String getEncryptionChoice(){
+    return encryptionChoice;
+  }
+
+  void setEncryptionChoice(String choice){
+    this.encryptionChoice = choice;
   }
 
   String getMessage() {
@@ -41,6 +52,23 @@ class UserInterface {
   private void setEncryptionKey(String encryptionKey) {
     this.encryptionKey = encryptionKey;
   }
+  void chooseEncrypterMethod() throws InterruptedException {
+    System.out.println("What encryption method:");
+    System.out.println("[1]Caeser Cypher\n[2]RSA");
+
+    String encrypterChoice = input.next();
+    if(encrypterChoice.equals("1")){
+      setEncryptionChoice("cc");
+    }
+    else if(encrypterChoice.equals("2")){
+      setEncryptionChoice("rsa");
+    }
+    else{
+      System.err.println("Invalid input!");
+      Thread.sleep(500);
+      chooseEncrypterMethod();
+    }
+  }
 
   /** starts the main menu of the encrypter */
   void opensTitleScreen() throws Exception {
@@ -52,15 +80,13 @@ class UserInterface {
             + " | |    | | | | |  __/>  <  | |___| (_) | (_| |  __/ (__ \n"
             + " |_|    |_|_| |_|\\___/_/\\_\\  \\_____\\___/ \\__,_|\\___|\\___|\n"
             + "                                                         ");
-    printMenu();
   }
 
-  private void printMenu() throws Exception {
-    System.out.println("\nChoose encryption method:");
+  void printMenu() throws Exception {
+    System.out.println("\nHow to enter message:");
     System.out.println("[1]Enter Message\n[2]Enter File");
 
     String menuChoice = input.next();
-
     switch (menuChoice) {
       case "1":
         enterACustomMessage();
@@ -120,7 +146,7 @@ class UserInterface {
   }
 
   void saveFileChooser(String message) throws Exception {
-    writeToFile(message, fileChooserSave());
+    writeToFile(message);
   }
 
   /**
@@ -128,9 +154,10 @@ class UserInterface {
    *
    * @param encryptedMessage defines string to write to file
    */
-  private void writeToFile(String encryptedMessage, String path) throws Exception {
+  private void writeToFile(String encryptedMessage) throws Exception {
     System.out.println("Enter a filename: ");
-    fileName = input.nextLine() + ".txt";
+    fileName = input.next() + ".txt";
+    String path = fileChooserSave();
     File file = new File(path + fileName);
     try {
       if (file.createNewFile()) {
@@ -142,7 +169,7 @@ class UserInterface {
         if (yesNo.equals("Y") || yesNo.equals("y")) {
           if (file.delete()) {
             Thread.sleep(1000);
-            writeToFile(encryptedMessage, path);
+            writeToFile(encryptedMessage);
           } else {
             System.err.println("Unable to delete!");
             Thread.sleep(500);
@@ -166,17 +193,22 @@ class UserInterface {
   }
 
   /** scanner for the custom user input */
-  private void enterACustomMessage() {
+  private void enterACustomMessage() throws InterruptedException {
     String enterMessage;
     System.out.println("Enter your message:");
     input.nextLine();
     enterMessage = input.nextLine();
     setMessage(enterMessage);
-    System.out.println("Enter your encryption Key or leave it blank to randomize it: ");
-    System.out.println("Use this format: [xxx:xxx]");
-    String keyMessage;
-    keyMessage = input.nextLine();
-    setEncryptionKey(keyMessage);
+    try {
+      if (encryptionChoice.equals("cc")) {
+        System.out.println("Enter your encryption Key or leave it blank to randomize it: ");
+        System.out.println("Use this format: [xxx:xxx]");
+        String keyMessage;
+        keyMessage = input.nextLine();
+        setEncryptionKey(keyMessage);
+      }
+    }catch(NullPointerException e){
+  }
   }
 
   /** opens the file chooser and sets the users path */
@@ -202,12 +234,16 @@ class UserInterface {
       Thread.sleep(500);
       printMenu();
     }
-    System.out.println("Enter your encryption Key or enter 0 to randomize it: ");
-    System.out.println("Use this format: [xxx:xxx]");
-    String keyFile;
-    input.nextLine();
-    keyFile = input.nextLine();
+    try {
+      if (encryptionChoice.equals("cc")) {
+        System.out.println("Enter your encryption Key or leave it blank to randomize it: ");
+        System.out.println("Use this format: [xxx:xxx]");
+        String keyFile;
+        keyFile = input.nextLine();
+        setEncryptionKey(keyFile);
+      }
+    }catch(NullPointerException e){
 
-    setEncryptionKey(keyFile);
+    }
   }
 }

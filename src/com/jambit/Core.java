@@ -1,19 +1,29 @@
 package com.jambit;
 
 public class Core {
-  public static void main(String[] args) {
-    rsa("hey");
-    // caesar();
-  }
-
-  public static void caesar() {
+  public static void main(String[] args) throws Exception {
     UserInterface ui = new UserInterface();
-    CaesarCodec caesarCodec = new CaesarCodec();
     try {
       ui.opensTitleScreen();
     } catch (Exception e) {
       e.printStackTrace();
     }
+    ui.chooseEncrypterMethod();
+    if(ui.getEncryptionChoice().equals("cc")){
+      caesar();
+    }
+    else if(ui.getEncryptionChoice().equals("rsa")){
+      rsa();
+    }
+    else{
+      System.err.println("Something went very wrong");
+    }
+  }
+
+  public static void caesar() throws Exception {
+    UserInterface ui = new UserInterface();
+    CaesarCodec caesarCodec = new CaesarCodec();
+    ui.printMenu();
     String key = ui.getEncryptionKey();
     String message = ui.getMessage();
     String encryptedMessage = "";
@@ -31,9 +41,11 @@ public class Core {
     }
   }
 
-  public static void rsa(String msg) {
+  public static void rsa() throws Exception {
+    UserInterface ui = new UserInterface();
+    ui.printMenu();
+    String msg = ui.getMessage();
     RSACodec rsaCodec = new RSACodec();
-    System.out.println("---RSA---");
 
     String[] x =
         rsaCodec.asymmetricKeyGenerator(
@@ -43,6 +55,10 @@ public class Core {
     System.out.println("\nPUBLIC KEY\n" + x[0] + "\nPRIVATE KEY\n" + x[1]);
     String encrypt = rsaCodec.RSAEncrypt(msg, x[0]);
     System.out.println("Encrypt:\n" + encrypt);
-    System.out.println("Decrypt:\n" + rsaCodec.RSADecrypt(encrypt, x[1]));
+    try {
+      ui.saveFileChooser(encrypt);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
