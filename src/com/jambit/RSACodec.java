@@ -135,7 +135,7 @@ public class RSACodec {
   private BigInteger coPrimeFactors(BigInteger factor, BigInteger o) {
     BigInteger out = null;
     for (BigInteger i = BigInteger.ONE; i.compareTo(o) < 0; i = i.add(BigInteger.ONE)) {
-      if (!i.mod(BigInteger.TWO).equals(BigInteger.ZERO)
+      if (!i.mod(new BigInteger("2")).equals(BigInteger.ZERO)
           && !factor.mod(i).equals(BigInteger.ZERO)
           && !o.mod(i).equals(BigInteger.ZERO)) {
         out = i;
